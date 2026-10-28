@@ -2,7 +2,7 @@
 
 **[Abrir el simulador en GitHub Pages](https://cintiacapece.github.io/arc-risc-simulator/)**
 
-Aplicación web educativa basada en los programas de la Guía 4 de la materia "Organización del Computador" (FIUBA) . Funciona en el navegador, sin servidor de cálculo ni dependencias de paquetes. El código del usuario no se evalúa como JavaScript.
+Aplicación web educativa basada en los programas de la Guía 4 y 5 de la materia "Organización del Computador" (FIUBA) . Funciona en el navegador, sin servidor de cálculo ni dependencias de paquetes. El código del usuario no se evalúa como JavaScript.
 
 ## Abrir
 
