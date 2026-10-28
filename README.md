@@ -24,6 +24,10 @@ No hace falta instalar paquetes. `npm start` y `npm test` son equivalentes.
 
 ## Uso
 
+La navegación superior incluye **Simulador**, **Teoría** y **Consignas**. Teoría ofrece un apunte por temas para los 24 ejercicios. Consignas reúne los enunciados, los programas y el diagrama de 4.23. Ambas secciones permiten buscar y filtrar por unidad. Los enlaces de cada consigna llevan a la teoría relacionada o cargan su ejemplo en el editor; los cambios de pestaña conservan el programa y la ejecución. Cargar un ejemplo desde una consigna restablece sus valores iniciales y pide confirmación si reemplaza código personalizado.
+
+El apunte es material didáctico redactado para la aplicación. Las consignas y el diagrama proceden del PDF de la Guía 4 aportado por la docente; se normalizaron espacios y la numeración repetida de algunos incisos. Los títulos breves y el banco de prueba 4.23 son ayudas agregadas. La teoría distingue la arquitectura ARC del alcance concreto del simulador.
+
 1. Elegí un ejercicio o importá un `.asm`. Podés editar el programa directamente.
 2. En **Estado inicial y punto de entrada**, especificá registros como JSON, por ejemplo `{"r14":4096,"r1":0}`. Valores enteros de 32 bits; nombres r0–r31. r0 se mantiene en cero. La entrada automática es `main`, si existe, o la primera instrucción; también podés elegir una etiqueta o dirección.
 3. Presioná **Ensamblar**. El ensamblador expande macros, calcula símbolos, asigna direcciones y valida operandos. Un error bloquea la ejecución.
@@ -106,3 +110,4 @@ Los valores iniciales por defecto son supuestos de laboratorio visibles. El prog
 - `server.cjs`: servidor local opcional, solo escucha en 127.0.0.1.
 
 Referencia de ISA consultada: Murdocca y Heuring, *Principles of Computer Architecture*, capítulo 4: https://academicos.azc.uam.mx/oan/lac/Murdocca_en.pdf. El dialecto concreto del curso (por ejemplo add/and/or sin cc y ld de tres operandos) se admite como se documenta aquí, sin afirmar compatibilidad completa con ARCTools.
+
