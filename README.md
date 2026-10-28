@@ -18,9 +18,10 @@ Abrí http://127.0.0.1:4173. Para verificar el motor:
 
 ```sh
 node test.cjs
+node test-guide5.cjs
 ```
 
-No hace falta instalar paquetes. `npm start` y `npm test` son equivalentes.
+No hace falta instalar paquetes. `npm start` inicia el servidor y `npm test` ejecuta ambas suites de pruebas.
 
 ## Uso
 
@@ -71,7 +72,7 @@ Instrucciones implementadas (lista exhaustiva):
 
 ```text
 nop
-add addcc and andcc or orcc orncc srl  rs1, rs2_o_simm13, rd
+add addcc subcc and andcc or orcc orncc srl  rs1, rs2_o_simm13, rd
 sethi imm22, rd
 ld [dirección], rd
 ld registroDirección, rd
@@ -97,7 +98,7 @@ Las direcciones pueden ser `[símbolo+constante]`, `[rBase+inmediato]`, `[rBase+
 
 ## Límites explícitos
 
-Es un ensamblador de representación intermedia e intérprete de Assembly, **no genera ni decodifica palabras máquina**. No ejecuta binarios. No implementa otros mnemónicos, pseudoinstrucciones generales, sub/subcc, mul, div, push/pop, halt, ventanas de registros, traps, interrupciones, periféricos, pipeline, microciclos ni código automodificable. Una instrucción fuera de la lista falla, nunca se simula con una operación vacía.
+Es un ensamblador de representación intermedia e intérprete de Assembly, **no genera ni decodifica palabras máquina**. No ejecuta binarios. No implementa otros mnemónicos, pseudoinstrucciones generales, sub, mul, div, push/pop, halt, ventanas de registros, traps, interrupciones, periféricos, pipeline, microciclos ni código automodificable. Una instrucción fuera de la lista falla, nunca se simula con una operación vacía.
 
 Los valores iniciales por defecto son supuestos de laboratorio visibles. El programa puede requerir otros valores y las soluciones no sustituyen la revisión del enunciado. 4.18 a es intencionalmente un ejemplo que no ensambla.
 
@@ -111,3 +112,27 @@ Los valores iniciales por defecto son supuestos de laboratorio visibles. El prog
 
 Referencia de ISA consultada: Murdocca y Heuring, *Principles of Computer Architecture*, capítulo 4: https://academicos.azc.uam.mx/oan/lac/Murdocca_en.pdf. El dialecto concreto del curso (por ejemplo add/and/or sin cc y ld de tres operandos) se admite como se documenta aquí, sin afirmar compatibilidad completa con ARCTools.
 
+
+
+
+## Guía 5 · El Lenguaje y la Máquina
+
+El selector superior cambia entre las guías 4 y 5 sin borrar el estado actual de sus laboratorios. Guía 5 incorpora Simulador, Teoría (9 temas) y Consignas (17 ejercicios).
+
+- 5.2: traducción fija de if/else a ARC; usa subcc, permite A/B de 32 bits, ejecución paso a paso y traza JSON. stmt1/stmt2 se representan con marcadores r3=1/2; no es un compilador de lenguajes generales.
+- 5.7: recorrido de las dos pasadas sobre el programa editable, contador de ubicación, tabla de símbolos, mapa resuelto y exportación JSON. El programa se valida al preparar el recorrido; no se generan palabras máquina. El recorrido no admite macros; su expansión y ejecución están disponibles en Guía 4.
+- 5.8–5.13: objetos didácticos, .extern/.global, símbolos locales y absolutos, conflicto de rangos, enlace de dos módulos, referencias resueltas y ejecución limitada a 12 pasos. .extern/.global se admiten en el laboratorio de enlace de Guía 5, no en el editor simple de Guía 4.
+- 5.14–5.16: traducción base/límite y paginación para dos procesos con tablas JSON editables, permisos y fallos. Se compara una dirección lógica común. No integra la MMU con la ejecución ARC ni implementa SO, TLB, swap, reemplazo o tablas multinivel.
+- 5.17: resolución de nombres contra bibliotecas cargadas en orden de búsqueda, dirección base+offset, diagnóstico de símbolos faltantes y exportación. No abre DLL/SO reales.
+
+El enlazador usa ARC-OBJ-EDUCATIVO, una representación JSON, no ELF/.o ni un enlazador binario real. Cada .org del módulo se mueve con el desplazamiento de su módulo; en herramientas reales un origen absoluto puede impedir esa relocalización. Las referencias simbólicas se reensamblan; las direcciones numéricas literales no se corrigen. Se admiten dos módulos sin macros y constantes .equ absolutas. Se preservan los límites de inmediatos del motor, y se rechazan símbolos externos sin resolver, globales duplicados, bases no alineadas y rangos superpuestos.
+
+subcc calcula resta módulo 2^32 y actualiza NZVC: C indica préstamo (unsigned A < unsigned B), V indica overflow firmado. r0 descarta el resultado pero los flags se actualizan. sub sin cc continúa sin estar implementada.
+
+En 5.12 el orden original orncc r3,r0,r3 produce todos unos; sumar ONE da r3=0. No niega y. El call sobrescribe r15: el jmpl del principal vuelve a sí mismo. El laboratorio conserva ese programa y señala sus efectos; enlazar no corrige lógica.
+
+Las consignas 5.9 y 5.14 se reproducen y se contextualizan: los símbolos absolutos pueden exportarse en ciertos formatos, y la multiprogramación también puede organizarse con otros mecanismos. No se presentan esas premisas simplificadas como reglas universales.
+
+Fuente de consignas/figura: Guía 5, curso Musso–Paiva, PDF aportado por la docente. El apunte es una elaboración didáctica. Los programas de la imagen 5.12 se transcribieron en dos editores.
+
+Verificación adicional: node test-guide5.cjs. Archivos nuevos: guide5-engine.js (modelo), guide5-content.js (material), guide5.js (interfaz), guide5.css y assets/enlazado-guia5.png.
