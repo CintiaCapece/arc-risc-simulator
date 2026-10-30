@@ -136,3 +136,10 @@ Las consignas 5.9 y 5.14 se reproducen y se contextualizan: los símbolos absolu
 Fuente de consignas/figura: Guía 5, curso Musso–Paiva, PDF aportado por la docente. El apunte es una elaboración didáctica. Los programas de la imagen 5.12 se transcribieron en dos editores.
 
 Verificación adicional: node test-guide5.cjs. Archivos nuevos: guide5-engine.js (modelo), guide5-content.js (material), guide5.js (interfaz), guide5.css y assets/enlazado-guia5.png.
+
+
+## Contador de visitas
+
+El pie muestra un contador global aproximado mediante el servicio externo [Hits](https://github.com/silentsoft/hits), compartido por las guías 4 y 5. Empieza el 29/10/2026; no recupera visitas históricas ni representa alumnos o personas únicas. La métrica depende de las reglas y disponibilidad de Hits, del navegador, su caché y los bloqueadores. No se agrega ningún valor inicial artificial.
+
+Solo se solicita el contador en la dirección pública canónica de GitHub Pages (también index.html). Las vistas previas y copias locales no suman visitas. Cambiar de guía o pestaña no vuelve a cargar el contador. La imagen usa referrerpolicy=no-referrer y no se envían al contador el código del editor, valores de registros ni contenido de las guías; la petición externa recibe los datos habituales de conexión. No se agrega un script remoto ni se guardan totales en localStorage. Si la petición falla o no responde en 12 segundos, se muestra “Contador no disponible”, sin reemplazarlo por una cifra inventada. El enlace permite consultar las estadísticas del servicio.
